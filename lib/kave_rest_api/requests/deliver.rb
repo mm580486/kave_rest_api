@@ -13,7 +13,8 @@ module KaveRestApi
         raise(ArgumentError,'Message Id Arrays: Buffer Overflow: Max length 3000 of array') if @messageid.length > 3000
         @messageid    = @messageid.join(',') 
       end
-      @response    = ResponseDeliver.new
+      @messageid    = @messageid.ctsd
+      @response     = ResponseDeliver.new
     end
   
     def call

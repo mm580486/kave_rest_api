@@ -1,11 +1,11 @@
 module KaveRestApi
-  class SendSimple
-    ACTION_NAME    = [:send,FORMAT].join('.').freeze
+  class Lookup
+    ACTION_NAME    = [:lookup,FORMAT].join('.').freeze
     include Validatable
     attr_accessor :receptor, :message,:unixdate,:type,:date,:localid,:sender
     attr_reader   :response,:message_size
     
-    validates_presence_of :message
+    validates_presence_of :token
     validates_presence_of :receptor
     validates_length_of :message, :within => 1..140
     validates_format_of :sender, :with => /^\d*$/, :if => Proc.new { !sender.nil? }
@@ -13,25 +13,18 @@ module KaveRestApi
     
     def initialize(args = {})
       @receptor    = args.fetch(:receptor)
-      if @receptor.kind_of?(Array)
-        @valid_receptor= false if @receptor.length > 200
-        @receptor      = @receptor.join(',') 
-      end
       @receptor    = @receptor.ctsd
-      @date        = args.fetch(:date,nil)
-      @message     = args.fetch(:message)
-      @message     = @message.ctsd if args.fetch(:standard_digit,false)
-      @unixdate    = args.fetch(:unixdate,nil) 
-      @type        = args.fetch(:type,nil)
-      @localid     = args.fetch(:localid,nil)
-      @sender      = args.fetch(:sender,DEFAULT_SENDER)
-      @response    = ResponseSendSimple.new
-      @message_size=@message.multibyte? ? 268:612
-      @valid_message= (@message.length > @message_size ) ? false:true
+      @valid_receptor = @receptor.is_phone? 
+      @token       = args.fetch(:token)
+      @token2      = args.fetch(:token2,nil)
+      @token3      = args.fetch(:token3,nil)
+      @template    = args.fetch(:template)
+      @type        = args.fetch(:type,'sms')
+      
     end
     
     def valid_message?
-      @valid_message
+      @valid_message ||= true
     end
     
     def valid_receptor?
@@ -39,7 +32,7 @@ module KaveRestApi
     end
     
     def call
-        connection = Faraday.new(url: "#{API_URL}/sms/") do |faraday|
+        connection = Faraday.new(url: "#{API_URL}/verify/") do |faraday|
           faraday.adapter Faraday.default_adapter
           faraday.response FORMAT.to_sym
         end
