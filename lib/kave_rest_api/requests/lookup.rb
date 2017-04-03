@@ -1,10 +1,8 @@
 module KaveRestApi
-  class Lookup
-    ACTION_NAME    = [:lookup,FORMAT].join('.').freeze
+  class Lookup < KaveRestApi::RequestBase
     include Validatable
     attr_accessor :receptor, :message,:unixdate,:type,:date,:localid,:sender
     attr_reader   :response,:message_size
-    
     validates_presence_of :token
     validates_presence_of :receptor
     validates_length_of :message, :within => 1..140
@@ -12,6 +10,8 @@ module KaveRestApi
     validates_format_of :unixdate, :with => /^\d*$/, :if => Proc.new { !unixdate.nil? }
     
     def initialize(args = {})
+      super
+      @ACTION_NAME    = [:lookup,@FORMAT].join('.').freeze
       @receptor    = args.fetch(:receptor)
       @receptor    = @receptor.ctsd
       @valid_receptor = @receptor.is_phone? 
@@ -32,11 +32,11 @@ module KaveRestApi
     end
     
     def call
-        connection = Faraday.new(url: "#{API_URL}/verify/") do |faraday|
+        connection = Faraday.new(url: "#{@API_URL}/verify/") do |faraday|
           faraday.adapter Faraday.default_adapter
-          faraday.response FORMAT.to_sym
+          faraday.response @FORMAT.to_sym
         end
-         response = connection.get(ACTION_NAME, receptor: @receptor , message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
+         response = connection.get(@ACTION_NAME, receptor: @receptor , message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
          @response.validate(response.body)
     end
     

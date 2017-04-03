@@ -34,6 +34,36 @@ describe KaveRestApi do
         expect(response.valid?).to eq(true)
     end
     
+    it "strip emoji" do
+      string = 'i\'m Rubyist🤠😎'
+      expect(string.strip_emoji).to eq('i\'m Rubyist')
+    end
+    
+    
+    it "regex phone" do
+        
+        phone_number='09127105568'
+        expect(phone_number.is_phone?).to eq(true)
+        
+        phone_number='۰۹۱۲۷۱۰۵۵۶۸'
+        expect(phone_number.is_phone?).to eq(true)
+    end
+    
+    it 'convert persian digit to standard digit' do
+        phone_number='0۹1۲7۱0۵5۶8'
+        expect(phone_number.ctsd).to eq('09127105568')
+    end
+    
+    it 'check multibyte string' do
+        string = 'Hi :)'
+        expect(string.multibyte?).to eq(false)
+        
+        string = 'salam خوبی ؟'
+        expect(string.multibyte?).to eq(true)
+        
+        string = 'hi 😈'
+        expect(string.multibyte?).to eq(true)
+    end
     
   end
 end

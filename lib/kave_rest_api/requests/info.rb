@@ -1,8 +1,9 @@
 module KaveRestApi
-  class Info
-    ACTION_NAME    = [:info,FORMAT].join('.').freeze
+  class Info < KaveRestApi::RequestBase
+    
 
     def initialize(args = {})
+      @ACTION_NAME    = [:info,@FORMAT].join('.').freeze
       @response     = ResponseInfo.new
     end
   
@@ -11,7 +12,7 @@ module KaveRestApi
           faraday.adapter Faraday.default_adapter
           faraday.response FORMAT.to_sym
         end
-         response = connection.get(ACTION_NAME)
+         response = connection.get(@ACTION_NAME)
          @response.validate(response.body)
     end
     

@@ -1,6 +1,6 @@
 module KaveRestApi
-  class SelectOutBox
-    ACTION_NAME    = [:selectoutbox,FORMAT].join('.').freeze
+  class SelectOutBox < KaveRestApi::RequestBase
+    
     include Validatable
     attr_accessor :startdate,:sender,:enddate
     attr_reader   :response
@@ -10,6 +10,8 @@ module KaveRestApi
     validates_format_of :enddate, :with => /^\d*$/, :if => Proc.new { !unixdate.nil? }
     
     def initialize(args = {})
+      super
+      @ACTION_NAME    = [:selectoutbox,@FORMAT].join('.').freeze
       @startdate   = args.fetch(:startdate)
       @enddate     = args.fetch(:enddate,nil)
       @sender      = args.fetch(:sender,nil)

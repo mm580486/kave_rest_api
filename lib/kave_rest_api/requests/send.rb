@@ -1,10 +1,8 @@
 module KaveRestApi
   class SendSimple < KaveRestApi::RequestBase
     include Validatable
-    
     attr_accessor :receptor, :message,:unixdate,:type,:date,:localid,:sender
     attr_reader   :response,:message_size,:config
-    
     validates_presence_of :message
     validates_presence_of :receptor
     validates_length_of :message, :within => 1..140

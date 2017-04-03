@@ -10,11 +10,11 @@ module KaveRestApi
     module StringHelper
       
      def ctsd
-         return self.to_s.tr('۰١۲۳۴۵۶۷۸۹،','0123456789,')
+         return self.to_s.tr('۰١۱۲۳۴۵۶۷۸۹،','01123456789,')
      end
      
      def ctpd
-         return self.to_s.tr('0123456789,','۰١۲۳۴۵۶۷۸۹،')
+         return self.to_s.tr('01123456789,','۰١۱۲۳۴۵۶۷۸۹،')
      end
      
      def strip_emoji
