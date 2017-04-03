@@ -2,6 +2,11 @@
     require dependency
 end
 
+begin
+  require "pry"
+rescue LoadError
+ 
+end
 
 module KaveRestApi
     
@@ -15,17 +20,15 @@ module KaveRestApi
   end
 
   class Configuration
-    attr_accessor :api_key, :default_sender,:debugmode,:format
-    
+    attr_accessor :api_key, :default_sender,:debugmode,:format,:strip_emoji
+   
     def initialize
+  
     end
-    
     
   end
   
 end
-
-
 
 %w(version core helper request meaning respond).each do |identify|
     require "kave_rest_api/#{identify}"

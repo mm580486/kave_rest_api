@@ -20,7 +20,7 @@ module KaveRestApi
       @token3      = args.fetch(:token3,nil)
       @template    = args.fetch(:template)
       @type        = args.fetch(:type,'sms')
-      
+      @response    = ResponseLookup.new
     end
     
     def valid_message?

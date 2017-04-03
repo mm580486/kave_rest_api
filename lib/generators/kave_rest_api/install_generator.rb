@@ -6,14 +6,12 @@ module Mellat
 
       def copy_initializer
         template "kave_rest_api_initializer.rb", "config/initializers/kave_rest_api.rb"
-
-
+        
          puts <<~EOF
         \e[36mInstall complete 👻 \e[0m
-          For report issues or suggest contact me on twitter: \e[32m@mm580486\e[0m 
+          For report issues or suggest feature contact me on twitter/github: \e[32m@mm580486\e[0m 
          EOF
       end
-      
 
     end
   end

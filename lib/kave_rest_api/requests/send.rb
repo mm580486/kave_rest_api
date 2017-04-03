@@ -1,9 +1,9 @@
 module KaveRestApi
-  class SendSimple
-    ACTION_NAME    = [:send,FORMAT].join('.').freeze
+  class SendSimple < KaveRestApi::RequestBase
     include Validatable
+    
     attr_accessor :receptor, :message,:unixdate,:type,:date,:localid,:sender
-    attr_reader   :response,:message_size
+    attr_reader   :response,:message_size,:config
     
     validates_presence_of :message
     validates_presence_of :receptor
@@ -12,7 +12,10 @@ module KaveRestApi
     validates_format_of :unixdate, :with => /^\d*$/, :if => Proc.new { !unixdate.nil? }
     
     def initialize(args = {})
+      super
+      @ACTION_NAME    = [:send,@FORMAT].join('.').freeze
       @receptor    = args.fetch(:receptor)
+      
       if @receptor.kind_of?(Array)
         @valid_receptor= false if @receptor.length > 200
         @receptor      = @receptor.join(',') 
@@ -24,7 +27,7 @@ module KaveRestApi
       @unixdate    = args.fetch(:unixdate,nil) 
       @type        = args.fetch(:type,nil)
       @localid     = args.fetch(:localid,nil)
-      @sender      = args.fetch(:sender,DEFAULT_SENDER)
+      @sender      = args.fetch(:sender,@DEFAULT_SENDER)
       @response    = ResponseSendSimple.new
       @message_size=@message.multibyte? ? 268:612
       @valid_message= (@message.length > @message_size ) ? false:true
@@ -39,12 +42,18 @@ module KaveRestApi
     end
     
     def call
-        connection = Faraday.new(url: "#{API_URL}/sms/") do |faraday|
+        connection = Faraday.new(url: "#{@API_URL}/sms/") do |faraday|
           faraday.adapter Faraday.default_adapter
-          faraday.response FORMAT.to_sym
+          faraday.response @FORMAT.to_sym
         end
-         response = connection.get(ACTION_NAME, receptor: @receptor , message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
-         @response.validate(response.body)
+        
+        begin
+          response = connection.get(@ACTION_NAME, receptor: @receptor , message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
+          @response.validate(response.body)
+        rescue => e
+          puts "Rescue : #{e}"
+        end
+         
     end
     
   end
