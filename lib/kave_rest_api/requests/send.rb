@@ -45,13 +45,8 @@ module KaveRestApi
           faraday.response @FORMAT.to_sym
         end
         
-        begin
           response = connection.get(@ACTION_NAME, receptor: @receptor , message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
           @response.validate(response.body)
-        rescue => e
-          puts "Rescue : #{e}"
-        end
-         
     end
     
   end
