@@ -10,7 +10,7 @@ module KaveRestApi
     module StringHelper
       
      def ctsd
-         return self.to_s.tr('۰١۱۲۳۴۵۶۷۸۹،','01123456789,')
+         return self.to_s.tr('۰١۱۲۳۴۵۶۷۸۹،١٢٣٤٥٦٧٨٩٠','01123456789,1234567890')
      end
      
      def ctpd
