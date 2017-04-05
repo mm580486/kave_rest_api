@@ -10,7 +10,7 @@ describe KaveRestApi do
         # config.debugmode = false #by default is true !!!
         
         # It is recommended you pull your API keys from environment settings. *required
-        config.api_key = '50344E7950373944734C794861424A6E382F545234673D3D'
+        config.api_key = 'XXXX-XXXX-XXXX-XXXX-XXXX'
         
         # Default response format it can include json or xml , by default is json. *optional
         config.format  = 'json'

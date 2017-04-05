@@ -81,9 +81,6 @@ notice: you can use persian and arabic number in receptor.
 
 ## Receive SMS
 
-<details>
-<summary>sample(click me)</summary>
-
 ```ruby
 client= KaveRestApi::Receive.new({
     #optional arguments
@@ -125,7 +122,7 @@ inbox = > [
 
 
 ```
-</details>
+
 ## Lookup
 
 ```ruby
@@ -151,7 +148,7 @@ end
 if response.valid?
     # succecful
 else
-    #error
+    #error 
 end
 
 
@@ -171,4 +168,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/mm5804
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

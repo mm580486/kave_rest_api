@@ -1,16 +1,15 @@
 module KaveRestApi
   class LatestOutBox < KaveRestApi::RequestBase
-
     include Validatable
     attr_accessor :pagesize,:sender
     attr_reader   :response
     validates_format_of :sender, :with => /^\d*$/, :if => Proc.new { !sender.nil? }
     validates_format_of :pagesize, :with => /^\d*$/, :if => Proc.new { !unixdate.nil? }
-    
+    validates_length_of :pagesize, :within => 1..4
     def initialize(args = {})
       super
       @ACTION_NAME = [:latestoutbox,@FORMAT].join('.').freeze
-      @pagesize    = args.fetch(:pagesize,3000).ctsd.to_i 
+      @pagesize    = args.fetch(:pagesize,3000).ctsd 
       @sender      = args.fetch(:sender,nil)
       @response    = ResponseLatestOutBox.new
     end
