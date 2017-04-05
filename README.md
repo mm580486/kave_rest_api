@@ -66,6 +66,8 @@ if client.valid?
     response = client.call
 else
     flash[:error]=client.errors.full_messages # is array
+    .
+    .
 end
 
 if response.valid?
@@ -75,8 +77,51 @@ else
 end
 
 ```
+notice: you can use persian and arabic number in receptor.
+
+## Receive SMS
+
+```ruby
+client= KaveRestApi::Receive.new({
+    #optional arguments
+    linenumber: 'XXXX-XXXX-XXXX-XXXX',
+    isread: 0 # unread sms = 0 and read sms = 1
+})
+
+if client.valid?
+    response = client.call
+else
+    flash[:error]=client.errors.full_messages # is array
+    .
+    .
+end
+
+if response.valid?
+    inbox=response.entries
+else
+    response.full_message_errors # is string 
+end
+
+inbox = > [
+        {
+            "messageid" : 35850015 , 
+            "message" : "خدمات پیام کوتاه کاوه نگار" , 
+            "sender" : "09360462960" ,
+            "receptor" : "3000202030" ,
+            "date" : 1357206241 
+        },
+        {
+            "messageid" : 35850016 , 
+            "message" : "خدمات پیام کوتاه کاوه نگار" , 
+            "sender" : "09123832441" ,
+            "receptor" : "3000202030" ,
+            "date" : 1357103281 
+        }
+    ]
 
 
+
+```
 
 ## Development
 
