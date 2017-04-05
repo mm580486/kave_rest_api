@@ -23,13 +23,12 @@ Or install it yourself as:
 ###### Using the generator
 
 Run the generator :
-    rails generate kave_rest_api install
+    ```rails generate kave_rest_api install```
 
-This will create a initializer at config/initializer/kave_rest_api_initializer.rb.
+This will create a initializer at **`config/initializer/kave_rest_api_initializer.rb`**.
 You can set api key , default sender , strip emoji , debugmode or format
 
-```
-
+```ruby
 KaveRestApi.configure do |config|
     
   # To completely ignore debug mode events(No Errors) uncomment this line *optional
@@ -42,26 +41,42 @@ KaveRestApi.configure do |config|
   config.format  = 'json'
   
   #If you don't set your sender number in your request, this is the default number used instead *required
-  config.default_sender  = '10000777070777'
+  config.default_sender  = 'XXXXXXXXXXXX'
   
   # You can remove problematic emojis (like android emojis) and replace with standard emojis listed here:(https://www.webpagefx.com/tools/emoji-cheat-sheet/)
-  # config.strip_emoji = false # can include false , true and matcher
+  # config.strip_emoji = 'false' # can include false , true and matcher
   
 end
+```
 
+## Send Simple SMS
+```ruby
 
+client=KaveRestApi::SendSimple.new({
+        receptor: '09127105568', # can be array ['09127105568','09123456789'] < = 3000 
+        message: 'hello my freinds'
+        #optional arguments
+        # ,sender: 'XXXXXXXXX'
+        # ,date: (Date.today + 90)
+        # ,type: 0 read this table http://kavenegar.com/rest.html#result-msgmode
+        # ,localid: SomeModel.id
+})
+
+if client.valid?
+    response = client.call
+else
+    flash[:error]=client.errors.full_messages # is array
+end
+
+if response.valid?
+    # anything ....
+else
+    response.full_message_errors # is string 
+end
 
 ```
 
 
-
-
-
-    
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
@@ -71,7 +86,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/kave_rest_api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mm580486/kave_rest_api.
 
 
 ## License
