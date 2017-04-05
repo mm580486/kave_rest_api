@@ -81,6 +81,9 @@ notice: you can use persian and arabic number in receptor.
 
 ## Receive SMS
 
+<details>
+<summary>sample(click me)</summary>
+
 ```ruby
 client= KaveRestApi::Receive.new({
     #optional arguments
@@ -122,7 +125,7 @@ inbox = > [
 
 
 ```
-
+</details>
 ## Lookup
 
 ```ruby
