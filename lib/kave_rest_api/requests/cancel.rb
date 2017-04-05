@@ -12,7 +12,7 @@ module KaveRestApi
     def initialize(args = {})
       super
       @ACTION_NAME    = [:countinbox,@FORMAT].join('.').freeze
-      @messageid      = args.fetch(:startdate)
+      @messageid      = args.fetch(:messageid)
       if @messageid.kind_of?(Array)
         @valid= false if @messageid.length > 200
         @messageid    = @messageid.join(',') 
