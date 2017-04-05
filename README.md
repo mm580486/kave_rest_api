@@ -1,8 +1,5 @@
 # KaveRestApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kave_rest_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -19,6 +16,48 @@ And then execute:
 Or install it yourself as:
 
     $ gem install kave_rest_api
+    
+    
+## How do I configure my app for Kave negar service ?
+
+###### Using the generator
+
+Run the generator :
+    rails generate kave_rest_api install
+
+This will create a initializer at config/initializer/kave_rest_api_initializer.rb.
+You can set api key , default sender , strip emoji , debugmode or format
+
+```
+
+KaveRestApi.configure do |config|
+    
+  # To completely ignore debug mode events(No Errors) uncomment this line *optional
+  # config.debugmode = false #by default it's true
+  
+  # It is recommended that you pull your API keys from environment settings. *required
+  config.api_key = 'XXXX-XXXX-XXXX-XXXX'
+  
+  # Default response format is json (you can use xml too). *optional
+  config.format  = 'json'
+  
+  #If you don't set your sender number in your request, this is the default number used instead *required
+  config.default_sender  = '10000777070777'
+  
+  # You can remove problematic emojis (like android emojis) and replace with standard emojis listed here:(https://www.webpagefx.com/tools/emoji-cheat-sheet/)
+  # config.strip_emoji = false # can include false , true and matcher
+  
+end
+
+
+
+```
+
+
+
+
+
+    
 
 ## Usage
 
