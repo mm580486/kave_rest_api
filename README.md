@@ -123,6 +123,37 @@ inbox = > [
 
 ```
 
+## Lookup
+
+```ruby
+client=KaveRestApi::Lookup.new({
+    receptor: 'XXXXXXXXX',
+    token: '4334', # only standard digit and english chars
+    template: 'auth',
+    #optional arguments
+    type: 'sms' # or call
+    token2: 'blah blah',
+    token3: 'blah blah'
+})
+
+
+if client.valid?
+    response = client.call
+else
+    flash[:error]=client.errors.full_messages # is array
+    .
+    .
+end
+
+if response.valid?
+    # succecful
+else
+    #error
+end
+
+
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
