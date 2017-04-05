@@ -130,7 +130,9 @@ inbox = > [
 
 ```
 </details>
+
 ## Lookup
+
 <details>
 <summary>sample (click me)</summary>
 
@@ -163,7 +165,6 @@ end
 
 ```
 </details>
-
 
 
 
