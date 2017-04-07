@@ -8,9 +8,9 @@ while input = gets.chomp()
 puts 'allright please wait...'
 case input
 when 'help','-h'
-   puts '-q[quite]		break while'
-   puts '-i[inbox]		show inbox messages'
-   puts '-s[send_simple]		send simple sms'
+   puts "-q[quite]\t\tbreak while"
+   puts "-i[inbox]\t\tshow inbox messages"
+   puts "-s[send_simple]\t\tsend simple sms"
 
 when 'quite','-q'
 	puts 'Ok , bye'
