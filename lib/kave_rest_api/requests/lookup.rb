@@ -36,7 +36,7 @@ module KaveRestApi
           faraday.adapter Faraday.default_adapter
           faraday.response @FORMAT.to_sym
         end
-         response = connection.get(@ACTION_NAME, receptor: @receptor ,template: @template, message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
+         response = connection.get(@ACTION_NAME, receptor: @receptor,token: @token,token2: @token2, token3: @token3 ,template: @template, message: @message,localid: @localid,sender: @sender,date: @date,type: @type)
          @response.validate(response.body)
     end
     
